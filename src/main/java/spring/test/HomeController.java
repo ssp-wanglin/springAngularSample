@@ -19,6 +19,8 @@ import spring.test.model.Account;
 @RestController
 public class HomeController {
 	
+	public HomeController() {}
+	
 	@RequestMapping(value = "/getAccounts/{id}", method=RequestMethod.GET, headers = "Accept=application/json")
 	public Account getAccountById(@PathVariable String id, HttpServletRequest request,HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
@@ -37,7 +39,7 @@ public class HomeController {
 	
 	@RequestMapping("/showCookies")  
 	public void showCookies(HttpServletRequest request,HttpServletResponse response ){  
-	       
+
 	    Cookie[] cookies = request.getCookies();
 	    if (null==cookies) {  
 	        System.out.println("No cookie=========");
@@ -76,9 +78,21 @@ public class HomeController {
 	}
 
     // Angularで生成したhtmlファイルを呼び出す
-    @RequestMapping("/")  
+    @RequestMapping("/")
     public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) {
-    	return new ModelAndView("dist/frontend/index");
+    	return new ModelAndView("index");
     }
+    
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public ModelAndView home(ModelAndView modelAndView) {
+        modelAndView.setViewName("home");
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)  
+    public String registPost() {  
+        return "/home";  
+    }
+
 }
